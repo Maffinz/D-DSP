@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/mainMenu.unity
     guid: 10e515382c10050478cf837a9e936a09
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/tileEditMap.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
