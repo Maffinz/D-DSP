@@ -21,4 +21,10 @@ public class mainMenuManager : MonoBehaviourPunCallbacks
     {
         _MainMenu.SetActive(true);
     }
+
+    public static void StartGame()
+    {
+        PhotonNetwork.LoadLevel(1);
+        Debug.Log("Changing Level");
+    }
 }

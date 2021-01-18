@@ -474,6 +474,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d406e7c56329fa4488b8ef893394a62e, type: 2}
   - {fileID: 11400000, guid: 3e0a05a8532277643b628640baabd5cc, type: 2}
   tileBox: {fileID: 615472908}
+  photonView: {fileID: 1543420317}
 --- !u!4 &432484273
 Transform:
   m_ObjectHideFlags: 0
@@ -944,7 +945,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2688,6 +2689,9 @@ GameObject:
   - component: {fileID: 1543420315}
   - component: {fileID: 1543420313}
   - component: {fileID: 1543420314}
+  - component: {fileID: 1543420317}
+  - component: {fileID: 1543420316}
+  - component: {fileID: 1543420318}
   m_Layer: 0
   m_Name: Tilemap (1)
   m_TagString: Untagged
@@ -2828,6 +2832,57 @@ Transform:
   m_Father: {fileID: 1825069035}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1543420316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543420312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &1543420317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543420312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 2
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1543420316}
+  viewIdField: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1543420318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543420312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568d990caa9e0d1488eb7b37c92bc8ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TM: {fileID: 1543420312}
+  test_text: {fileID: 0}
 --- !u!1 &1752985871
 GameObject:
   m_ObjectHideFlags: 0

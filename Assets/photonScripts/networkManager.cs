@@ -21,7 +21,12 @@ public class networkManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonNetwork.GameVersion = _GameVersion;
+        PhotonNetwork.SendRate = 20;
+        PhotonNetwork.SerializationRate = 10;
+
         PhotonNetwork.ConnectUsingSettings();
+
+        PhotonNetwork.AutomaticallySyncScene = true;
 
         // Activate NetworkInfo
         NetworkInformation.SetActive(true);

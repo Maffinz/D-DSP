@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class tilemapEdit : MonoBehaviour
+public class tilemapEdit : MonoBehaviourPun, IPunObservable
 {
     public Tilemap tilemap; // Default Tilemap
     public List<TileBase> tilePack; // (Testing) Default Tile
@@ -13,6 +14,13 @@ public class tilemapEdit : MonoBehaviour
     private GameObject tileSlotprefab;
     private Tile SelectedTile;
 
+    // Testing
+    public static Vector3Int CellPosition { get; set; }
+    public static int TileIndex { get; set; }
+    public static bool Changed { get; set; }
+
+    public PhotonView photonView;
+
     void Start()
     {
         tileSlotprefab = Resources.Load("Prefabs/TileSlot") as GameObject;
@@ -20,6 +28,11 @@ public class tilemapEdit : MonoBehaviour
 
         // Set Default Selected Tile
         SelectedTile = (Tile)tilePack[0];
+
+        //PV.RPC("RPC_DrawTile", RpcTarget.All);
+        NetworkMapEdit.Tilemap_ = tilemap;
+
+        Changed = false;
     }
     // Update is called once per frame
     void Update()
@@ -27,7 +40,6 @@ public class tilemapEdit : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) EditingMode = true;
         if (Input.GetKeyDown(KeyCode.Escape)) EditingMode = false;
 
-        Debug.Log(EditingMode);
         // Editing Mode
         if(EditingMode)
         {
@@ -37,12 +49,24 @@ public class tilemapEdit : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) // Insert Tile
                 {
-                    DrawTile();
+                    if(photonView.IsMine)
+                    {
+                        NetworkMapEdit.OnClickEditTile(GetCellPosition(GetClickPosition()), tilePack.IndexOf(SelectedTile));
+                    }
+                    
+                  //DrawTile();
                 }
             }
-            
         }
-        
+
+        if(Changed)
+        {
+            Netowork_ChangeTile();
+            Changed = false;
+        }
+
+        //Debug.LogError("Cell Position: " + CellPosition);
+        //Debug.LogError("Index        : " + TileIndex);
         
     }
 
@@ -51,11 +75,16 @@ public class tilemapEdit : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    void DrawTile()
+    Vector3Int GetCellPosition(Vector3 Click_Position)
     {
+        return tilemap.WorldToCell(Click_Position);
+    }
+
+    public void onClick_UpdateTile()
+    { 
         Vector3 click_position = GetClickPosition();
-        Vector3Int cell_pos = tilemap.WorldToCell(click_position);
-        tilemap.SetTile(cell_pos, SelectedTile);
+        CellPosition = tilemap.WorldToCell(click_position);
+        tilemap.SetTile(CellPosition, SelectedTile);
     }
 
     void FillTileParent()
@@ -79,5 +108,27 @@ public class tilemapEdit : MonoBehaviour
     private void GetTileButtonClicked(GameObject btn = null)
     {
         SelectedTile = btn.transform.GetChild(0).GetComponent<TileSelect>().tile;
+    }
+
+    public void Netowork_ChangeTile()
+    {
+        tilemap.SetTile(CellPosition, tilePack[TileIndex]);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        Debug.Log("TileMapEdit...Stream: " + stream);
+        if (stream.IsWriting)
+        {
+            stream.SendNext(CellPosition);
+            stream.SendNext(SelectedTile);
+        }
+        else if (stream.IsReading)
+        {
+            Vector3Int cp = (Vector3Int)stream.ReceiveNext();
+            Tile st = (Tile)stream.ReceiveNext();
+
+            tilemap.SetTile(cp, st);
+        }
     }
 }

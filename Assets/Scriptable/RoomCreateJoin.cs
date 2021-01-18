@@ -11,11 +11,13 @@ public class RoomCreateJoin : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_InputField JoinRoomInput;
     [SerializeField] private GameObject CreateRoomObject;
     [SerializeField] private GameObject JoinRoomObject;
+    [SerializeField] private GameObject StartGameObject;
 
     private void Awake()
     {
         ChangeInteractionValue(CreateRoomObject);
         ChangeInteractionValue(JoinRoomObject);
+        ChangeInteractionValue(StartGameObject);
     }
 
     private void Update()
@@ -54,13 +56,19 @@ public class RoomCreateJoin : MonoBehaviourPunCallbacks
         Application.Quit();
     }
 
+    public void OnClickStartGame()
+    {
+        mainMenuManager.StartGame();
+    }
+
     // PUN CALLBACKS
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined Lobby");
+        Debug.Log("Joined Room");
     }
     public override void OnCreatedRoom()
     {
+        StartGameObject.GetComponent<Button>().interactable = true;
         Debug.Log("Created Room");
     }
 
