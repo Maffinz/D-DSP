@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class tilemapEdit : MonoBehaviourPun, IPunObservable
+public class tilemapEdit : MonoBehaviourPun
 {
     public Tilemap tilemap; // Default Tilemap
     public List<TileBase> tilePack; // (Testing) Default Tile
@@ -13,6 +13,8 @@ public class tilemapEdit : MonoBehaviourPun, IPunObservable
     bool EditingMode = false;
     private GameObject tileSlotprefab;
     private Tile SelectedTile;
+
+    public GameObject TileBoxSelector;
 
     // Testing
     public static Vector3Int CellPosition { get; set; }
@@ -25,6 +27,7 @@ public class tilemapEdit : MonoBehaviourPun, IPunObservable
     {
         tileSlotprefab = Resources.Load("Prefabs/TileSlot") as GameObject;
         FillTileParent();
+        TileBoxSelector.SetActive(false);
 
         // Set Default Selected Tile
         SelectedTile = (Tile)tilePack[0];
@@ -43,7 +46,7 @@ public class tilemapEdit : MonoBehaviourPun, IPunObservable
         // Editing Mode
         if(EditingMode)
         {
-            if (Input.GetKeyDown(KeyCode.Tab)) tileBox.SetActive(!tileBox.activeInHierarchy);
+            if (Input.GetKeyDown(KeyCode.Tab)) TileBoxSelector.SetActive(!tileBox.activeInHierarchy);
 
             if (!tileBox.activeInHierarchy)
             {
@@ -64,10 +67,6 @@ public class tilemapEdit : MonoBehaviourPun, IPunObservable
             Netowork_ChangeTile();
             Changed = false;
         }
-
-        //Debug.LogError("Cell Position: " + CellPosition);
-        //Debug.LogError("Index        : " + TileIndex);
-        
     }
 
     Vector3 GetClickPosition()
@@ -115,7 +114,7 @@ public class tilemapEdit : MonoBehaviourPun, IPunObservable
         tilemap.SetTile(CellPosition, tilePack[TileIndex]);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+/*    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Debug.Log("TileMapEdit...Stream: " + stream);
         if (stream.IsWriting)
@@ -130,5 +129,5 @@ public class tilemapEdit : MonoBehaviourPun, IPunObservable
 
             tilemap.SetTile(cp, st);
         }
-    }
+    }*/
 }

@@ -64,19 +64,12 @@ public class NetworkMapEdit : MonoBehaviour
         // 
         Cell_Position_ = new Vector3Int(x,y,z);
         Tile_Index = index;
-
-        // Debugging 
-        Debug.LogError(string.Format("X: {0}, Y: {1}, Z: {2}", x, y, z));
-        Debug.LogError("Cell Positoin: " + Cell_Position_);
-        Debug.LogError("Tile Index   : " + Tile_Index);
-
         Edit_Map();
     }
 
     public void Edit_Map()
     {
         Debug.Log("Editing Map...");
-        Debug.LogWarning("Values: " + Cell_Position_ + "Second Value: " + Tile_Index);
         tilemapEdit.CellPosition = Cell_Position_;
         tilemapEdit.TileIndex = Tile_Index;
         tilemapEdit.Changed = true;
