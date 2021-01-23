@@ -76,6 +76,7 @@ public class tilemapEdit : MonoBehaviourPun
 
     Vector3Int GetCellPosition(Vector3 Click_Position)
     {
+        Debug.Log("Cell Position: " + tilemap.WorldToCell(Click_Position));
         return tilemap.WorldToCell(Click_Position);
     }
 
@@ -85,6 +86,7 @@ public class tilemapEdit : MonoBehaviourPun
         CellPosition = tilemap.WorldToCell(click_position);
         tilemap.SetTile(CellPosition, SelectedTile);
     }
+
 
     void FillTileParent()
     {
