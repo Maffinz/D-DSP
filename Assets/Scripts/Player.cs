@@ -52,8 +52,8 @@ public class Player : MonoBehaviour
             TargetPosition = CellPosition(ClickPosition());
 
             // Offset
-            TargetPosition.x = TargetPosition.x ;
-            TargetPosition.y = TargetPosition.y;
+            TargetPosition.x = TargetPosition.x + 1;
+            TargetPosition.y = TargetPosition.y + 1;
 
             NewTargePosition.x = (float)((double)TargetPosition.x - .50);
             NewTargePosition.y = (float)((double)TargetPosition.y - .50);
