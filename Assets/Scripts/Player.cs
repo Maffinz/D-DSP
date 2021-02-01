@@ -10,32 +10,59 @@ public class Player : MonoBehaviour
     private float MoveSpeed = 5;
     private PhotonView photonView;
 
+    public static bool isEditing { get; set; }
+
     // Testin
     private GameObject GridManager;
     [SerializeField] private Tilemap tilemap;
 
     private Vector3Int TargetPosition;
     private Vector3 NewTargePosition;
+    
+    //Zoom 
+    [SerializeField] private Camera myCamera;
+    public float ZoomSpeed = 0.5f; // Default 5
 
     public void Start()
     {
         // Set PlayerTransform to its transform
         PlayerTransform = this.GetComponent<Transform>();
         photonView = this.GetComponent<PhotonView>();
+        myCamera = this.transform.GetChild(0).GetComponent<Camera>();
 
         // Testing
         GridManager = GameObject.Find("GridManager");
         tilemap = GridManager.transform.GetChild(1).GetComponent<Tilemap>();
 
         TargetPosition = new Vector3Int(0, 0, 0);
+
+        if(!photonView.IsMine)
+        {
+            myCamera.enabled = false;
+        }
+
+        isEditing = false;
     }
 
     public void Update()
     {
         if(photonView.IsMine)
         {
-            CheckInput();
+            if(!isEditing)
+                CheckInput();
         }
+
+        // Scroll
+        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            myCamera.orthographicSize += ZoomSpeed;
+        }
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && myCamera.orthographicSize > 1.5)
+        {
+            if (myCamera.orthographicSize < 1.5) myCamera.orthographicSize = 1.5f;
+            else myCamera.orthographicSize -= ZoomSpeed;
+        }
+
     }
 
     private void CheckInput()
@@ -73,11 +100,16 @@ public class Player : MonoBehaviour
 
     private Vector3 ClickPosition()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return myCamera.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private Vector3Int CellPosition(Vector3 clickPos)
     {
         return tilemap.WorldToCell(clickPos);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Hitting Something: " + collision.collider.offset);
     }
 }

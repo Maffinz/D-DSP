@@ -15,6 +15,8 @@ public class tilemapEdit : MonoBehaviourPun
     private Tile SelectedTile;
 
     public GameObject TileBoxSelector;
+    [SerializeField] private static GameObject m_Player;
+    private static Camera m_Camera;
 
     // Testing
     public static Vector3Int CellPosition { get; set; }
@@ -35,16 +37,26 @@ public class tilemapEdit : MonoBehaviourPun
         //PV.RPC("RPC_DrawTile", RpcTarget.All);
         NetworkMapEdit.Tilemap_ = tilemap;
 
+       
+
         Changed = false;
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) EditingMode = true;
-        if (Input.GetKeyDown(KeyCode.Escape)) EditingMode = false;
+        Debug.Log("At TileMap");
+        if (Input.GetKeyDown(KeyCode.E)) {
+            EditingMode = true;
+            Player.isEditing = true;
+        } 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            EditingMode = false;
+            Player.isEditing = false;
+        }
 
         // Editing Mode
-        if(EditingMode)
+        if(EditingMode && PhotonNetwork.IsMasterClient)
         {
             if (Input.GetKeyDown(KeyCode.Tab)) TileBoxSelector.SetActive(!tileBox.activeInHierarchy);
 
@@ -56,10 +68,12 @@ public class tilemapEdit : MonoBehaviourPun
                     {
                         NetworkMapEdit.OnClickEditTile(GetCellPosition(GetClickPosition()), tilePack.IndexOf(SelectedTile));
                     }
-                    
-                  //DrawTile();
+
+                    //DrawTile();
+                    Debug.Log("Clicked on Tile: Editing");
                 }
             }
+            Debug.Log("Editing Mode");
         }
 
         if(Changed)
@@ -71,7 +85,7 @@ public class tilemapEdit : MonoBehaviourPun
 
     Vector3 GetClickPosition()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return m_Camera.ScreenToWorldPoint(Input.mousePosition);
     }
 
     Vector3Int GetCellPosition(Vector3 Click_Position)
@@ -116,20 +130,33 @@ public class tilemapEdit : MonoBehaviourPun
         tilemap.SetTile(CellPosition, tilePack[TileIndex]);
     }
 
-/*    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public static void SetMasterClientCamera()
     {
-        Debug.Log("TileMapEdit...Stream: " + stream);
-        if (stream.IsWriting)
-        {
-            stream.SendNext(CellPosition);
-            stream.SendNext(SelectedTile);
-        }
-        else if (stream.IsReading)
-        {
-            Vector3Int cp = (Vector3Int)stream.ReceiveNext();
-            Tile st = (Tile)stream.ReceiveNext();
+        // If Master Client Player Has already been set return
+        if (m_Player != null) return;
 
-            tilemap.SetTile(cp, st);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach(GameObject player in players)
+        {
+            if(PhotonNetwork.IsMasterClient)
+            {
+                if(player.GetPhotonView().IsMine)
+                {
+                    m_Player = player;
+                    m_Camera = m_Player.transform.GetChild(0).GetComponent<Camera>();
+                    return;
+                }
+            }
         }
-    }*/
+
+        // Get Master Client Object
+        //m_Player_ = PhotonNetwork.MasterClient;
+        //m_Camera = m_Player_.transform.GetChild(0).GetComponent<Camera>();
+        
+
+        Debug.LogWarning("Spawned Player...");
+        Debug.LogWarning("Camera: " + m_Camera);
+    }
+
 }
