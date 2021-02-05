@@ -10,7 +10,7 @@ public class networkManager : MonoBehaviourPunCallbacks
     private TMP_Text NetworkInfo;
     [SerializeField] private GameObject NetworkInformation;
 
-    private static string _GameVersion = "Alpha 1.0";
+    private static string _GameVersion = "Alpha 2.0";
 
     public static string GameVersion
     {
