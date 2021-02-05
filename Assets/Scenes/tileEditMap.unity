@@ -595,6 +595,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01847ac9a4dcae947a8a3370fd7e47eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_TileMaps:
+  - {fileID: 1456312419}
+  - {fileID: 1543420313}
   tilemap: {fileID: 1543420313}
   tilePack:
   - {fileID: 11400000, guid: 4d6ce729eb237a443806b8a060aefc53, type: 2}
@@ -3549,7 +3552,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TM: {fileID: 1543420312}
-  test_text: {fileID: 0}
 --- !u!19719996 &1543420322
 TilemapCollider2D:
   m_ObjectHideFlags: 0
