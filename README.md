@@ -1,12 +1,12 @@
 # D&D Online Platform
+Senior Project 2020
+Dungeons and Dragon Online
+1st January 2021
 
 
 
 <h1>Baldemar Castillo, Pablo Murguia Bravo, William Hernandez</h1>
 
-Senior Project 2020
-Dungeons and Dragon Online
-1st January 2021
 
 
 <h2>OVERVIEW</h2>
