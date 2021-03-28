@@ -84,10 +84,6 @@ public class tilemapEdit : MonoBehaviourPun
                             NetworkMapEdit.OnClickEditTile(GetCellPosition(GetClickPosition()), tilePack.IndexOf(SelectedTile));
                         }
                     }
-                    if (Input.GetMouseButtonDown(1)) // Store Data
-                    {
-
-                    }
                 }
                 Debug.Log("Editing Mode");
             }
@@ -175,7 +171,7 @@ public class tilemapEdit : MonoBehaviourPun
 
                     // Set Canvas and EditMode Buttons
                     m_canvas = m_Player.transform.GetChild(1).gameObject;
-                    m_EditMode = m_canvas.transform.GetChild(1).gameObject;
+                    m_EditMode = m_canvas.transform.GetChild(2).gameObject;
 
                     // Set Button Listner
                     m_EditMode.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => On_CollisionButtonClick());

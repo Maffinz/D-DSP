@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     private Button DataButton;
     public  GameObject DataDisplay;
     private Vector3 DataClickPosition;
+    private GameObject m_CameraObject;
+    private GameObject m_Fog;
 
     public static bool isEditing { get; set; }
 
@@ -40,11 +42,13 @@ public class Player : MonoBehaviour
         PlayerTransform = this.GetComponent<Transform>();
         photonView = this.GetComponent<PhotonView>();
         myCamera = this.transform.GetChild(0).GetComponent<Camera>();
+        m_Fog = this.transform.GetChild(1).GetChild(0).gameObject;
 
-        DataEntryParent = this.transform.GetChild(1).GetChild(2).gameObject;
-        DataEntryObject = this.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<TMP_InputField>();
-        DataButton = this.transform.GetChild(1).GetChild(2).GetChild(1).GetComponent<Button>();
-        DataDisplay = this.transform.GetChild(1).GetChild(3).gameObject;
+        m_CameraObject = this.transform.GetChild(0).gameObject;
+        DataEntryParent = this.transform.GetChild(1).GetChild(3).gameObject;
+        DataEntryObject = this.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<TMP_InputField>();
+        DataButton = this.transform.GetChild(1).GetChild(3).GetChild(1).GetComponent<Button>();
+        DataDisplay = this.transform.GetChild(1).GetChild(4).gameObject;
 
         // Set Button Listener 
         DataButton.GetComponent<Button>().onClick.AddListener(() => OnClick_ConfirmButton());
@@ -59,7 +63,14 @@ public class Player : MonoBehaviour
         if(!photonView.IsMine)
         {
             myCamera.enabled = false;
+            m_CameraObject.SetActive(false);
             DataDisplay.SetActive(false);
+            m_Fog.SetActive(false);
+        } 
+        else
+        {
+            myCamera.enabled = true;
+            m_Fog.SetActive(true); 
         }
 
         isEditing = false;

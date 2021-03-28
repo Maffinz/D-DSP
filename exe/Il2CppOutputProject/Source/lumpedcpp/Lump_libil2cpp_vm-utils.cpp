@@ -1,0 +1,6 @@
+#include "il2cpp-config.h"
+#include "C:\Users\willi\Documents\CSCI\GameDev\game06-mod2-project-404-game-not-found\seniorproject\exe\Il2CppOutputProject\IL2CPP\libil2cpp\vm-utils\BlobReader.cpp"
+#include "C:\Users\willi\Documents\CSCI\GameDev\game06-mod2-project-404-game-not-found\seniorproject\exe\Il2CppOutputProject\IL2CPP\libil2cpp\vm-utils\Debugger.cpp"
+#include "C:\Users\willi\Documents\CSCI\GameDev\game06-mod2-project-404-game-not-found\seniorproject\exe\Il2CppOutputProject\IL2CPP\libil2cpp\vm-utils\NativeDelegateMethodCache.cpp"
+#include "C:\Users\willi\Documents\CSCI\GameDev\game06-mod2-project-404-game-not-found\seniorproject\exe\Il2CppOutputProject\IL2CPP\libil2cpp\vm-utils\NativeSymbol.cpp"
+#include "C:\Users\willi\Documents\CSCI\GameDev\game06-mod2-project-404-game-not-found\seniorproject\exe\Il2CppOutputProject\IL2CPP\libil2cpp\vm-utils\VmStringUtils.cpp"
