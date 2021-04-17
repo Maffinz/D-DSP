@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private Vector3 DataClickPosition;
     private GameObject m_CameraObject;
     private GameObject m_Fog;
+    [SerializeField] private FieldOfView m_FieldOfView;
 
     public static bool isEditing { get; set; }
 
@@ -70,7 +71,9 @@ public class Player : MonoBehaviour
         else
         {
             myCamera.enabled = true;
-            m_Fog.SetActive(true); 
+            m_Fog.SetActive(true);
+            m_FieldOfView.SetOrigin(transform.position);
+            m_FieldOfView.SetPosition(transform.position);
         }
 
         isEditing = false;
@@ -94,6 +97,9 @@ public class Player : MonoBehaviour
             if (myCamera.orthographicSize < 1.5) myCamera.orthographicSize = 1.5f;
             else myCamera.orthographicSize -= ZoomSpeed;
         }
+
+        m_FieldOfView.SetOrigin(transform.position);
+        //m_FieldOfView.SetPosition(transform.position);
 
     }
 
